@@ -4,7 +4,7 @@ on:
     push
 
 jobs:
-    ascii_job:
+    build_job_1:
         runs-on: ubuntu-latest
         steps:
         - name: Checkout Repo
@@ -18,4 +18,23 @@ jobs:
             chmod +x ascii-script.sh
             ./ascii-script.sh
 
+    test_job_2:
+        needs: build_job_1
+        runs-on: ubuntu-latest
+        steps:
+        - name: sleep for 2 seconds
+          run: sleep 2
+
+        - name: Test file exists
+          run: grep -i "dragon" dragon.txt
+
+    deploy_job_3:
+        needs: test_job_2
+        runs-on: ubuntu-latest
+        steps:
+        - name: Display Dragon
+          run: cat dragon.txt
+        
+        - name: Deploying
+          run: echo "Deploying"
         
