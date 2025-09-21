@@ -5,19 +5,19 @@ on:
     workflow_dispatch: 
 
 jobs:
-    deploy:
+    deploy:        
         strategy:
             fail-fast: false
             max-parallel: 2
             matrix:
-                os: [ubuntu-latest, ubuntu-20.04, windows-latest]
+                os: [ubuntu-latest, windows-latest]
                 images: [hello-world, alpine]
                 exclude:
                   - images: alpine
                     os: windows-latest
                 include:
                   - images: amd64/alpine
-                    os: ubuntu-20.04
+                    os: ubuntu-latest
         runs-on: ${{matrix.os}}
         steps:
         - name: Echo Docker Details
